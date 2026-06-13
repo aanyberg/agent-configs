@@ -28,7 +28,6 @@ Tasks have two states, each with a directory:
 **Status:** planned | active
 **Created:** <datetime>
 **Started:** <datetime>      # active only
-**Finished:** <datetime>     # on completion
 
 ## Branch                    # active only
 `<type>/<short-description>`
@@ -64,8 +63,9 @@ Branch is not merge-ready until **ALL** are satisfied:
 - [ ] `CHANGELOG.md` updated (if public behaviour changed)
 - [ ] Version bumped in `pyproject.toml` / `package.json` (if applicable)
 - [ ] Summary section appended to task file
-
-## Agent Discipline
+- [ ] Backlog items created for any incomplete Plan steps or unresolved Blockers
+- [ ] Backlog table is updated with "Done" status
+- [ ] Task file is removed after completion — should not be in `.claude/tasks/` or `.claude/planning/` once done.Agent Discipline
 
 - **No code without task file.** No branch without a matching task file.
 - **Plan before code.** Scope freezes once Plan is written — changes require Plan update, logged reason, and human confirmation if significant.
