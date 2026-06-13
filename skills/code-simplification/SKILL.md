@@ -1,5 +1,5 @@
 ---
-name: code-simplifications
+name: code-simplification
 description: Rules for simplifying code using Python idioms, comprehensions, operators, and eliminating unnecessary complexity
 ---
 

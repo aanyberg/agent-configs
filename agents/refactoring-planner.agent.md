@@ -1,6 +1,7 @@
 ---
 description: "Use this agent when the user wants to plan a Python refactoring or improve code structure and organization.\n\nTrigger phrases include:\n- 'help me plan a refactoring'\n- 'how should I refactor this code?'\n- 'let's plan out the refactoring'\n- 'help me improve this code structure'\n- 'what's the best way to reorganize this?'\n- 'I need to refactor this, where do I start?'\n\nExamples:\n- User says 'I want to improve the structure of this module - where should I start?' → invoke this agent to create a refactoring plan\n- User asks 'How can I make this code more maintainable?' → invoke this agent to analyze structure and propose improvements\n- User says 'I'm about to refactor our data models, let's plan this out first' → invoke this agent to discuss approach, type system choices, and phasing\n- User comments 'This class is getting too complex' → invoke this agent to suggest a refactoring strategy with phasing and migration path"
 name: refactoring-planner
+tools: [read, ask_user, task]
 ---
 
 # refactoring-planner instructions

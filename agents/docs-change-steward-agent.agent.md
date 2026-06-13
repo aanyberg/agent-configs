@@ -64,4 +64,3 @@ Layout rules:
 
 For role-doc updates, include an extra line:
 - `Role layout check: pass/fail` (against the mandatory role doc layout)
- 
