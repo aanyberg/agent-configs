@@ -39,6 +39,8 @@ One paragraph: what and why.
 - [ ] Criterion one
 - [ ] Criterion two
 
+Acceptance criteria should be discussed through questions with the user and refined until they are clear, specific, and testable. They define the conditions for task completion and guide development and testing.
+
 ## Plan
 Ordered steps. Written before any code. Update + log if it changes.
 

@@ -22,9 +22,9 @@ If the file does not exist, create it with the header and empty table before add
 ```markdown
 # Backlog
 
-| ID | Title | Type | Priority | Status | Task File | Notes |
-|----|-------|------|----------|--------|-----------|-------|
-| 001 | Short imperative description | feat | high | backlog | — | Optional context |
+| ID | Title | Type | Priority | Status | Task File | Acceptance Criteria Summary | Notes |
+|----|-------|------|----------|--------|-----------|--------------------|-------|
+| 001 | Short imperative description | feat | high | backlog | — | Feature X should contain xyz | Optional context |
 ```
 
 ### Column Definitions
