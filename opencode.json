@@ -1,0 +1,22 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": ["@ex-machina/opencode-anthropic-auth@1.8.1"],
+  "permission": {
+    "skill": {
+      "included": "allow",
+      "caveman": "allow",
+      "caveman-help": "allow",
+      "caveman-compress": "allow",
+      "task-workflow": "allow",
+      "git-conventions": "allow",
+      "code-standards": "allow"
+    }
+  },
+  "skills": {
+    "paths": [
+      "~/.config/opencode/skills",
+      "~/.claude/skills",
+      "~/.copilot/skills"
+    ]
+  }
+}
