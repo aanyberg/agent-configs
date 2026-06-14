@@ -68,6 +68,7 @@ Branch is not merge-ready until **ALL** are satisfied:
 - [ ] Backlog items created for any incomplete Plan steps or unresolved Blockers
 - [ ] Backlog table is updated with "Done" status
 - [ ] Task file is removed after completion — should not be in `.claude/tasks/` or `.claude/planning/` once done.Agent Discipline
+- [ ] Feature branch is up to date with remote main so there's no merge conflicts.
 
 - **No code without task file.** No branch without a matching task file.
 - **Plan before code.** Scope freezes once Plan is written — changes require Plan update, logged reason, and human confirmation if significant.
