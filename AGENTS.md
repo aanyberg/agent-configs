@@ -1,38 +1,19 @@
 # Global Configuration
 
-Loaded in every project. Defines delegation rules, git discipline, and code standards.
+## When to Load Skills
 
-## Skill-Based Documentation
-
-Core guidelines have been extracted into focused, auto-loading skills:
-
-| Skill | Triggers | Content |
-|-------|----------|---------|
-| **task-workflow** | Creating/managing tasks, checking merge readiness | Task lifecycle, file structure, acceptance criteria, deployment checklist |
-| **architecture-planning** | Making architectural decisions, designing systems, choosing tech, defining boundaries | Living `architecture.md`, ADR records, decision process, structural trade-offs |
-| **backlog-management** | Adding backlog items, updating status, marking tasks done | Backlog file structure, status lifecycle, sync with task-workflow on completion |
-| **git-conventions** | Committing code, creating branches, git operations | Conventional Commits, branch naming, one-change discipline, worktrees |
-| **code-standards** | Writing code, linting, PR reviews | Import rules, testing boundaries, style guides, semantic versioning, agent discipline |
-| **typescript-coding-guidelines** | Writing/reviewing TS or JS files | Type system, error handling, naming, imports, testing, general TS/JS rules |
-
-Skills auto-load when detected in your work. Load the relevant skill proactively:
-- **backlog-management** when: adding backlog items, checking backlog status, marking tasks done, or updating `.agent/backlog.md`
-- **task-workflow** when: creating `.agent/tasks/*.md`, promoting tasks, checking merge readiness, or working on task-related operations
-- **architecture-planning** when: introducing/removing a service, module, or boundary; choosing a technology or datastore; defining how components communicate; or making any decision expensive to reverse
-- **git-conventions** when: committing code, creating branches, discussing git workflow, or doing git operations
-- **code-standards** when: writing/reviewing code, running linters, discussing architecture/testing, or pre-merge validation
-- **typescript-coding-guidelines** when: writing or reviewing `.ts`, `.tsx`, `.js`, or `.jsx` files, running ESLint/Biome, or doing TS/JS pre-merge validation
+| Trigger | Skill |
+|---------|-------|
+| Creating/managing tasks, checking merge readiness | `task-workflow` |
+| Architectural decisions, new services/modules, tech choices | `architecture-planning` |
+| Backlog updates or status changes | `backlog-management` |
+| Committing, branching, git operations | `git-conventions` |
+| Writing/reviewing code, linting, PR reviews | `code-standards` |
 
 ## Quick Reference
 
-**Task workflow:** Create `<type>_<short-description>.md` in `.agent/tasks/` with Status/Goal/Acceptance Criteria/Plan before any code.
-
-**Commits:** `<type>(<scope>): <imperative>` using types `feat`, `fix`, `chore`, `docs`. Branches: `<type>/<short-kebab>`.
-
-**Code:** Consult the `code-standards` skill for language specific instructions.
-
-**Architecture:** Record structural decisions as ADRs and keep a living `architecture.md`. Structural choices are blockers — surface and confirm before coding.
-
-**Backlog:** All work items tracked in `.agent/backlog.md`. Status: `backlog → active → done`. Update on task completion before removing task file.
-
-**Agent rule:** No code without an active task file. No branch without a matching task. Surface blockers; don't guess.
+**Task:** `<type>_<short-description>.md` in `.agent/tasks/` with Status/Goal/Acceptance Criteria/Plan before any code.  
+**Commits:** `<type>(<scope>): <imperative>` — types: `feat`, `fix`, `chore`, `docs`. Branches: `<type>/<short-kebab>`.  
+**Architecture:** Record decisions as ADRs in `architecture.md`. Structural choices are blockers — surface and confirm before coding.  
+**Backlog:** `.agent/backlog.md` — status: `backlog → active → done`. Update on task completion before removing task file.  
+**Agent rule:** No code without a task file. No branch without a matching task. Surface blockers; don't guess.

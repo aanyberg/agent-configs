@@ -106,23 +106,3 @@ def create_widget(name: str) -> Widget:
     return widget
 ```
 
-## Optional: ty
-
-For fast type checking, consider [ty](https://docs.astral.sh/ty/) from Astral (creators of ruff and uv). Written in Rust, significantly faster than mypy or pyright.
-
-```bash
-uvx ty check          # run directly, no install needed
-uvx ty check src/     # check specific path
-```
-
-```toml
-# pyproject.toml
-[tool.ty]
-python-version = "3.12"
-```
-
-When to choose:
-
-- `ty` — fastest, good for CI and large codebases (early stage, rapidly evolving)
-- `pyright` — most complete type inference, VS Code integration
-- `mypy` — mature, extensive plugin ecosystem

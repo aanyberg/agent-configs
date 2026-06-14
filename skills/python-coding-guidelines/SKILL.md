@@ -116,4 +116,25 @@ description: Rules for simplifying code using Python idioms, comprehensions, ope
 
 - Projects generally use `hatch` as a project/environment manager. Use the appropriate skill, check the projects documentation, or `pyproject.toml` for entrypoints for testing, static analysis, etc.
 
+## Patterns & Idioms
+
+<!-- rule:255 -->
+- Use list comprehensions instead of for-loop-with-append patterns — more concise, readable, and often faster for transforming/filtering iterables into lists
+<!-- rule:519 -->
+- Use dict comprehensions instead of empty dict + loop — reduces boilerplate and signals intent more clearly
+<!-- rule:330 -->
+- Use `any()` instead of for-loops with boolean flags when checking if any element matches a condition — eliminates manual flag management and break statements
+<!-- rule:677 -->
+- Use `@cached_property` for expensive computed attributes — defers computation until first access and caches the result
+<!-- rule:85 -->
+- Omit parameters that match default values in function/constructor calls — makes non-default configuration more visible
+<!-- rule:166 -->
+- Eliminate single-use intermediate variables — reassign or return directly instead of creating `_filtered`, `_copy`, etc.
+<!-- rule:122 -->
+- Flatten nested `if` statements with no intervening code into `if condition1 and condition2:` — reduces nesting depth without changing logic
+<!-- rule:3 -->
+- Use `x or default` for fallback values instead of verbose if-else blocks — avoid when falsy values (0, `''`, `[]`, `None`) are semantically valid
+<!-- rule:1001 -->
+- Define `TypeAdapter` instances at module level as constants — avoids repeated initialization overhead on every call
+
 ## Topic Guides

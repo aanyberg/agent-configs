@@ -5,8 +5,6 @@ description: Use when making architectural decisions, designing systems or compo
 
 # Architecture Planning
 
-Captures system-level decisions and keeps a single, current picture of how the system is built. Think like a senior system architect: optimise for clarity, reversibility, and the team that maintains this in two years - not for cleverness.
-
 ## When This Applies
 
 Engage this skill when a change touches **structure**, not just implementation:
@@ -99,15 +97,6 @@ Work through these as a dialogue with the user — do not decide unilaterally on
 4. **Evaluate against drivers, not preference.** Trade-offs explicitly: what each option costs. Prefer reversible decisions; spend the analysis budget on the irreversible ones.
 5. **Recommend, then confirm.** Give a clear recommendation with reasoning — not an unranked survey. Get user agreement before recording.
 6. **Record.** Write the ADR and update the affected `architecture.md` sections in the same change.
-
-## Principles
-
-- **Reversibility over perfection.** Make one-way doors deliberately; walk through two-way doors quickly.
-- **Boundaries over layers.** Define what owns what and what may depend on what; let internal structure follow.
-- **Decisions, not predictions.** Record what is known now; revisit when constraints change rather than designing for imagined futures.
-- **Simplicity is a feature.** Every added component, dependency, or abstraction must earn its complexity. Prefer composition and clear contracts.
-- **Document the "why."** Code shows *what*; ADRs preserve the reasoning that the code cannot.
-- **Keep it current.** An out-of-date `architecture.md` is worse than none. Update it as part of the change that alters the system, not later.
 
 ## Agent Discipline
 

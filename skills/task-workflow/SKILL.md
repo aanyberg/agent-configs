@@ -54,21 +54,33 @@ Open questions needing human input. In planned tasks these are pre-start blocker
 What was built; deviations from Plan.
 ```
 
-## Merge Readiness Checklist
+## Merge Readiness Verification
 
-Branch is not merge-ready until **ALL** are satisfied:
+A branch is **not** merge-ready until every item below has been *verified in the current session*. Verification means running the stated check and observing its result — **not** ticking a box from memory or assumption. Work through the table top to bottom and record evidence as you go.
 
-- [ ] All Acceptance Criteria checked
-- [ ] Tests cover new code
-- [ ] No lint or type errors
-- [ ] Pre-commit passes
-- [ ] `CHANGELOG.md` updated (if public behaviour changed)
-- [ ] Version bumped in `pyproject.toml` / `package.json` (if applicable)
-- [ ] Summary section appended to task file
-- [ ] Backlog items created for any incomplete Plan steps or unresolved Blockers
-- [ ] Backlog table is updated with "Done" status
-- [ ] Task file is removed after completion — should not be in `.claude/tasks/` or `.claude/planning/` once done.Agent Discipline
-- [ ] Feature branch is up to date with remote main so there's no merge conflicts.
+| # | Item | How to verify | Evidence to capture |
+|---|------|---------------|---------------------|
+| 1 | All Acceptance Criteria met | Re-read each criterion in the task file; confirm the implementation satisfies it | Each `- [ ]` flipped to `- [x]` in the task file |
+| 2 | Tests cover new code | Run the test suite; confirm new/changed code has tests | Test command + pass count |
+| 3 | No lint or type errors | Run the linter and type checker | Commands + clean exit |
+| 4 | Pre-commit passes | Run the pre-commit hooks across the diff | Command + clean exit |
+| 5 | `CHANGELOG.md` updated | Only if public behaviour changed | Diff shown, or "N/A — no public behaviour change" |
+| 6 | Version bumped | Only if applicable (`pyproject.toml` / `package.json`) | Old → new version, or "N/A" with reason |
+| 7 | Summary appended to task file | Confirm `## Summary` section exists and reflects what was built | Section present |
+| 8 | Backlog items for leftovers | Create backlog entries for incomplete Plan steps / unresolved Blockers | Item IDs created, or "none outstanding" |
+| 9 | Backlog status updated | Set this task's row to "Done" in `.agent/backlog.md` | Diff shown |
+| 10 | Task file removed | After all above pass, delete the file from `.claude/tasks/` or `.claude/planning/` | File no longer present |
+| 11 | Branch current with remote main | `git fetch` then confirm branch is rebased/merged on top of `origin/main` with no conflicts | Command + "up to date" |
+
+**Gate — read before claiming "done" or "ready to merge":**
+
+- Do **not** report a task as complete or merge-ready until items 1–11 are each verified with evidence in this session. Stop on the first failure, fix it, then re-verify.
+- For every item, state the result explicitly as **pass**, **fail**, or **N/A (reason)**. Silence is not a pass — an unverified item counts as failing.
+- A conditional item (5, 6) still requires an explicit decision: state why it does or does not apply.
+- If any item cannot be verified (missing tooling, ambiguous criterion), treat it as a **Blocker**, surface it to the user, and do not merge.
+- Order matters: item 10 (remove task file) and the "Done" backlog status (item 9) come **last**, only after 1–8 and 11 have passed.
+
+## Agent Discipline
 
 - **No code without task file.** No branch without a matching task file.
 - **Plan before code.** Scope freezes once Plan is written — changes require Plan update, logged reason, and human confirmation if significant.

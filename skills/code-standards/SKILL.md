@@ -15,8 +15,12 @@ Enforces consistent code quality and architectural boundaries.
 - Shared test utilities go in a dedicated `test-utils` or `testing` module.
 
 ### Style Guides
-- `/python-best-practices` when: writing Python code, running linters, discussing architecture/testing, or pre-merge validation for Python code.
-- `/typescript-coding-guidelines` when: writing TypeScript or JavaScript code, running ESLint/Biome, discussing TS architecture/testing, or pre-merge validation for TS/JS code.
+
+Load language skills based on the files being changed:
+
+- **Python** (`.py`, `pyproject.toml`, `requirements.txt`): load `python-best-practices` + `python-coding-guidelines`; also load `python-design-patterns` when designing or refactoring component structure
+- **TypeScript / JavaScript** (`.ts`, `.tsx`, `.js`, `.jsx`): load `typescript-coding-guidelines`
+- **Hatch projects**: load `hatch-workflow` for test, lint, and build entrypoints
 
 ### Semantic Versioning
 - **Source of truth:** `pyproject.toml` (Python) or `package.json` (Node.js/TypeScript)
