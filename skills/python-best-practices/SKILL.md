@@ -5,7 +5,7 @@ description: Use when reading or writing Python files (.py, pyproject.toml, requ
 
 # Python Best Practices
 
-Follows type-first, functional, and error handling patterns from CLAUDE.md. This skill covers language-specific idioms only.
+Follows type-first, functional, and error handling patterns from AGENTS.md. This skill covers language-specific idioms only.
 
 ## Make Illegal States Unrepresentable
 
@@ -105,4 +105,3 @@ def create_widget(name: str) -> Widget:
     logger.debug("created widget id=%s", widget.id)
     return widget
 ```
-

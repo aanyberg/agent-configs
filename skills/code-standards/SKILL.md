@@ -20,6 +20,7 @@ Load language skills based on the files being changed:
 
 - **Python** (`.py`, `pyproject.toml`, `requirements.txt`): load `python-best-practices` + `python-coding-guidelines`; also load `python-design-patterns` when designing or refactoring component structure
 - **TypeScript / JavaScript** (`.ts`, `.tsx`, `.js`, `.jsx`): load `typescript-coding-guidelines`
+- **Rust** (`.rs`, `Cargo.toml`): load `rust-best-practices` + `rust-coding-guidelines`; also load `rust-design-patterns` when designing or refactoring component structure
 - **Hatch projects**: load `hatch-workflow` for test, lint, and build entrypoints
 
 ### Semantic Versioning
