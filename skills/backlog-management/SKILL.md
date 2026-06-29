@@ -12,7 +12,7 @@ Maintains a single source of truth for all work items across every state — fro
 Each project root keeps its backlog at:
 
 ```
-<root>/.claude/backlog.md
+<root>/.agents/backlog.md
 ```
 
 If the file does not exist, create it with the header and empty table before adding the first item.
@@ -56,7 +56,7 @@ backlog → active → done
 
 ## Adding a Backlog Item
 
-1. Open `<root>/.claude/backlog.md`.
+1. Open `<root>/.agents/backlog.md`.
 2. Assign the next sequential ID.
 3. Append a new row with `Status: backlog` and `Task File: —`.
 4. Set Priority to `medium` unless there is a clear reason to differ.
@@ -66,7 +66,7 @@ backlog → active → done
 When a task file is created (either directly or via `planned → active` promotion per task-workflow):
 
 1. Change the row's `Status` to `active`.
-2. Set `Task File` to the relative path of the task file (e.g., `.claude/tasks/feat_user-auth.md`).
+2. Set `Task File` to the relative path of the task file (e.g., `.agents/tasks/feat_user-auth.md`).
 
 ## Marking an Item Done
 

@@ -13,8 +13,8 @@ Tasks have two states, each with a directory:
 
 | State | Location | Created via |
 |---|---|---|
-| `planned` | `<root>/.claude/planning/<category>/` | Definition only, no code, no branch |
-| `active` | `<root>/.claude/tasks/` | Move from planning OR create directly |
+| `planned` | `<root>/.agents/planning/<category>/` | Definition only, no code, no branch |
+| `active` | `<root>/.agents/tasks/` | Move from planning OR create directly |
 
 **Filename:** `<type>_<short-description>.md` (e.g. `feat_user-authentication.md`)
 
@@ -68,8 +68,8 @@ A branch is **not** merge-ready until every item below has been *verified in the
 | 6 | Version bumped | Only if applicable (`pyproject.toml` / `package.json`) | Old → new version, or "N/A" with reason |
 | 7 | Summary appended to task file | Confirm `## Summary` section exists and reflects what was built | Section present |
 | 8 | Backlog items for leftovers | Create backlog entries for incomplete Plan steps / unresolved Blockers | Item IDs created, or "none outstanding" |
-| 9 | Backlog status updated | Set this task's row to "Done" in `.agent/backlog.md` | Diff shown |
-| 10 | Task file removed | After all above pass, delete the file from `.claude/tasks/` or `.claude/planning/` | File no longer present |
+| 9 | Backlog status updated | Set this task's row to "Done" in `.agents/backlog.md` | Diff shown |
+| 10 | Task file removed | After all above pass, delete the file from `.agents/tasks/` or `.agents/planning/` | File no longer present |
 | 11 | Branch current with remote main | `git fetch` then confirm branch is rebased/merged on top of `origin/main` with no conflicts | Command + "up to date" |
 
 **Gate — read before claiming "done" or "ready to merge":**
