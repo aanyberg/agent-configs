@@ -22,7 +22,7 @@ If a task surfaces one of these, **stop and plan here before coding** — this i
 
 | Artifact | Location | Purpose |
 |---|---|---|
-| `architecture.md` | in `.agent/` | Living description of the system **as it is now** |
+| `architecture.md` | in `.agents/` | Living description of the system **as it is now** |
 | ADR entries | `## Decisions` log in `architecture.md` | Immutable record of **why** a decision was made, with context and alternatives |
 
 Rule of thumb: `architecture.md` answers *"how does this work today?"*; ADRs answer *"why is it this way?"*. Keep `architecture.md` current by editing it; never rewrite history in an ADR — supersede it instead.
