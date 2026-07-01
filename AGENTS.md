@@ -12,8 +12,8 @@
 
 ## Quick Reference
 
-**Task:** `<type>_<short-description>.md` in `.agent/tasks/` with Status/Goal/Acceptance Criteria/Plan before any code.  
+**Task:** `<type>_<short-description>.md` in `.agents/tasks/` with Status/Goal/Acceptance Criteria/Plan before any code.  
 **Commits:** `<type>(<scope>): <imperative>` — types: `feat`, `fix`, `chore`, `docs`. Branches: `<type>/<short-kebab>`.  
 **Architecture:** Record decisions as ADRs in `architecture.md`. Structural choices are blockers — surface and confirm before coding.  
-**Backlog:** `.agent/backlog.md` — status: `backlog → active → done`. Update on task completion before removing task file.  
+**Backlog:** `.agents/backlog.md` — status: `backlog → active → done`. Update on task completion before removing task file.  
 **Agent rule:** No code without a task file. No branch without a matching task. Surface blockers; don't guess.
