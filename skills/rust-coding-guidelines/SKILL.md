@@ -5,17 +5,10 @@ description: Rules for Rust code — idioms, type system usage, error handling, 
 
 # Rust Coding Guidelines
 
-Applies to all `.rs` files and `Cargo.toml`. Mirrors the philosophy of `python-best-practices` and `typescript-coding-guidelines`: type-first, make illegal states unrepresentable, explicit error handling, and no unnecessary complexity.
+Applies to all `.rs` files and `Cargo.toml`. Builds on the **Universal Code Rules** in `code-standards`; only Rust-specific rules are listed here. Pairs with `rust-best-practices` (worked examples) and `rust-design-patterns`.
 
 ## Code Style
 
-- Keep commits focused on their stated purpose — exclude unrelated changes even if conceptually related — Simplifies review, prevents unintended side effects, and makes rollbacks cleaner when each PR has a single clear objective
-- Wrap code identifiers in backticks in user-facing messages (errors, warnings, logs) — Improves readability and clearly distinguishes code elements from prose
-- Centralize validation at one layer — parse input into a validated type once at the boundary, then trust the type — Prevents validation drift and establishes a single source of truth (see "Parse, don't validate")
-- Extract duplicated logic into shared functions after 2+ occurrences — refactor existing code rather than creating parallel implementations — Prevents bugs from inconsistent implementations
-- Remove commented-out code, unused definitions, and superseded implementations — Version control preserves history; dead code creates confusion about active control flow
-- Inline single-use helpers that only wrap field access or delegation — reduces indirection without sacrificing clarity
-- Scope helpers and constants to their single usage site — define inside the `impl`/`fn`/module that uses them, not at crate root — Reduces namespace pollution and prevents accidental reuse of implementation details
 - Compile static `Regex` patterns once with `LazyLock` (or `once_cell::Lazy`) — avoids recompilation overhead on repeated calls
 - Prefer iterator chains (`.iter().map().filter().collect()`) over manual `for`-loop-with-push — more concise, often faster, and signals intent
 - Let `rustfmt` own formatting — never hand-format; run it before committing and never `#[rustfmt::skip]` without a documented reason
@@ -42,20 +35,14 @@ Applies to all `.rs` files and `Cargo.toml`. Mirrors the philosophy of `python-b
 - Define domain error enums with `thiserror` for libraries — one variant per failure mode, with `#[from]` for automatic conversion and `#[source]` to preserve the cause chain
 - Use `anyhow` (with `.context("...")`) for application/binary code where callers won't match on the error variant — add context at each layer so the chain reads top-down
 - Add context when propagating across an abstraction boundary — a bare `?` that surfaces a low-level IO error to a user is worse than `.context("reading config from {path}")`
-- Include the relevant identifiers in error messages, quoted with backticks, so values are unambiguously delimited
 - Return `Result` instead of sentinel values; use `Option<T>` for genuine absence (not failure), and convert with `.ok_or(...)` / `.ok_or_else(...)`
 - Never silently discard a `Result` — handle it, propagate with `?`, or explicitly `let _ =` with a comment explaining why the error is safe to ignore
-- Validate input before expensive work — fail fast to avoid wasted computation
 
 ## Naming
 
 - `snake_case` for functions, variables, modules, and files; `PascalCase` for types, traits, and enum variants; `SCREAMING_SNAKE_CASE` for `const`/`static`
 - Prefix internal items with nothing but keep them private (no `pub`) — Rust's module visibility, not naming, marks the public surface; use `pub(crate)` for crate-internal sharing
-- Drop redundant prefixes when context is clear — prefer `Config::description` over `Config::config_description`; the type already provides context
-- Use specific names that convey semantic meaning — prefer `user_id`, `order_id` over generic `id`, `data` — prevents confusion when several identifiers are in scope
-- Boolean-returning functions read as predicates: `is_empty`, `has_capacity`, `can_retry`
 - Getters drop the `get_` prefix (`fn name(&self)`, not `fn get_name(&self)`); conversions follow convention: `as_` (cheap borrow), `to_` (expensive/owned), `into_` (consuming)
-- Rename functions when their behavior changes — names must reflect actual scope, return values, and abstraction level
 
 ## Imports & Modules
 
@@ -63,17 +50,12 @@ Applies to all `.rs` files and `Cargo.toml`. Mirrors the philosophy of `python-b
 - Import the item you use (`use std::collections::HashMap;` then `HashMap`) rather than fully-qualifying at call sites; for trait methods, import the trait
 - Avoid glob imports (`use foo::*`) except for preludes and inside `#[cfg(test)] mod tests` (`use super::*`)
 - Define a module's public API explicitly with `pub use` re-exports at the crate root — let internal module structure stay refactorable without breaking consumers
-- Remove unused imports — `cargo` warns on these; treat the warning as an error
 - Keep `mod` declarations and visibility tight — expose the minimum; default to private and widen deliberately
 
 ## Testing
 
 - Put unit tests in a `#[cfg(test)] mod tests` block in the same file; put integration tests in `tests/` exercising the public API only
-- Test behavior through the public interface — avoid asserting on private internals
-- Use descriptive test names that read as sentences: `fn returns_none_when_user_not_found()`, `fn errors_when_token_expired()`
-- Remove tests when redundant, obsolete, or duplicative — each test should verify distinct, currently-existing behavior
 - Prefer `assert_eq!`/`assert!` with a message; use `#[should_panic(expected = "...")]` to pin the panic reason; reach for `proptest` when input space is large
-- Don't suppress coverage to hide gaps — write the test; only mark genuinely unreachable paths
 
 ## General
 

@@ -29,14 +29,6 @@ Use this skill when:
 - Improving test strategy for new functionality
 - Checking maintainability and design quality
 
-## Keywords
-python, code review, git diff, pull request, google style guide, pyguide, typing, type hints, tests, business logic, complexity, maintainability, SOLID, separation of concerns, idiomatic python, refactor, suggestions
-
-## Inputs expected
-- Repository with Git history
-- Current branch checked out
-- Optional: target base branch (default: `main` or merge-base)
-
 ## Workflow
 
 ### 1) Collect changed Python files
@@ -123,9 +115,3 @@ Return:
 - Called out complexity with simplification options
 - Used constructive, collaborative wording
 - Gave actionable suggestions, not only critique
-
-## Example prompts
-- “Review my current branch Python changes with this skill.”
-- “Focus on typing and test adequacy in modified files.”
-- “Find unnecessary complexity and suggest simpler designs.”
-- “Check whether business logic has sufficient tests.”

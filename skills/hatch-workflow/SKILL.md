@@ -44,9 +44,7 @@ hatch test -c -n0 tests/unittest/test_constraint.py
 
 ## 2) Static analysis (linting/formatting/docstring lint)
 
-This repo defines a static analysis env in `[tool.hatch.envs.hatch-static-analysis]`.
-
-### Lint and format wiht autofixes
+### Lint and format with autofixes
 
 ```bash
 hatch fmt
@@ -85,8 +83,6 @@ hatch fmt --formatter
 ---
 
 ## 3) Type checking (mypy)
-
-This repo defines a types env in `[tool.hatch.envs.types]`.
 
 ### Run mypy (installs any missing stubs automatically)
 
@@ -131,8 +127,6 @@ hatch build -c -t sdist
 ---
 
 ## 5) Documentation (Sphinx)
-
-This repo defines a docs env in `[tool.hatch.envs.docs]`.
 
 ### Generate API docs (sphinx-apidoc) into `docs/code`
 
