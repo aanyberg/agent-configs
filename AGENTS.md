@@ -9,6 +9,7 @@
 | Backlog updates or status changes | `backlog-management` |
 | Committing, branching, git operations | `git-conventions` |
 | Writing/reviewing code, linting, PR reviews | `code-standards` |
+| Writing/updating docs, READMEs, changelogs, role/layer docs | `docs-standards` |
 
 ## Quick Reference
 
