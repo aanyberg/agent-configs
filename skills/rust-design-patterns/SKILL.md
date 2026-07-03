@@ -81,20 +81,3 @@ mod tests {
     }
 }
 ```
-
-## Best Practices
-
-1. Simplest solution that works
-2. One reason to change per type/module
-3. Distinct layers (handler → service → repository) with clear ownership
-4. Compose with structs and traits; there is no inheritance to reach for
-5. Wait before abstracting (Rule of Three) — the wrong trait is costly to remove
-6. Generics by default; trait objects only when you need them
-7. Borrow by default; own only when you must store or consume
-8. Parse at the boundary; make illegal states unrepresentable
-9. Constructor injection of trait-typed collaborators for testability
-10. Keep business logic pure; push I/O and `async` to the edges
-11. 20–50 lines, one purpose per function; flatten with `?` and combinators
-12. Delete dead code before considering abstractions
-13. Errors as typed enums per layer; convert with `From`/`#[from]`
-14. Explicit over clever
