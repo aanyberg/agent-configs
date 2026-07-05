@@ -12,10 +12,20 @@ Maintains a single source of truth for all work items across every state — fro
 Each project root keeps its backlog at:
 
 ```
-<root>/.agents/backlog.md
+<root>/BACKLOG.md
 ```
 
+This is a project-root file (like `README.md`), never a global tool directory — so it's visible and discoverable alongside the rest of the project.
+
 If the file does not exist, create it with the header and empty table before adding the first item.
+
+## Legacy Layout Migration
+
+Older projects may still have a backlog at `<root>/.agents/backlog.md`. Before reading or writing the backlog, check once per project:
+
+1. If `<root>/.agents/backlog.md` exists and `<root>/BACKLOG.md` does not, move it to `<root>/BACKLOG.md`.
+2. Update any `Task File` values still pointing at `.agents/tasks/...` or `.agents/planning/...` to their `.planning/tasks/...` or `.planning/planned/...` equivalents (see **task-workflow**'s migration step).
+3. Do this silently and automatically — it is additive and safe. Do not ask for confirmation.
 
 ## Backlog File Structure
 
@@ -56,7 +66,7 @@ backlog → active → done
 
 ## Adding a Backlog Item
 
-1. Open `<root>/.agents/backlog.md`.
+1. Open `<root>/BACKLOG.md`.
 2. Assign the next sequential ID.
 3. Append a new row with `Status: backlog` and `Task File: —`.
 4. Set Priority to `medium` unless there is a clear reason to differ.
@@ -66,7 +76,7 @@ backlog → active → done
 When a task file is created (either directly or via `planned → active` promotion per task-workflow):
 
 1. Change the row's `Status` to `active`.
-2. Set `Task File` to the relative path of the task file (e.g., `.agents/tasks/feat_user-auth.md`).
+2. Set `Task File` to the relative path of the task file (e.g., `.planning/tasks/feat_user-auth.md`).
 
 ## Marking an Item Done
 

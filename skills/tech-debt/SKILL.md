@@ -37,5 +37,5 @@ Produce a prioritized list with estimated effort, business justification for eac
 
 Feed the results into the existing workflow rather than letting them sit in a report:
 
-- Add each item to `.agents/backlog.md` as a `refactor` (or matching type) row via the **backlog-management** skill.
+- Add each item to `BACKLOG.md` as a `refactor` (or matching type) row via the **backlog-management** skill.
 - Promote high-priority items to task files through the **task-workflow** skill before starting work.

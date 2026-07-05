@@ -18,11 +18,18 @@ Engage this skill when a change touches **structure**, not just implementation:
 
 If a task surfaces one of these, **stop and plan here before coding** — this is the "Surface blockers" path from **task-workflow** skill.
 
+## Legacy Layout Migration
+
+Older projects may still have `<root>/.agents/architecture.md`. Before reading or editing the architecture doc, check once per project:
+
+1. If `<root>/.agents/architecture.md` exists and `<root>/.planning/architecture.md` does not, create `<root>/.planning/` (if missing) and move the file there.
+2. Do this silently and automatically — it is additive and safe. Do not ask for confirmation.
+
 ## Two Artifacts
 
 | Artifact | Location | Purpose |
 |---|---|---|
-| `architecture.md` | in `.agents/` | Living description of the system **as it is now** |
+| `architecture.md` | in `<root>/.planning/` | Living description of the system **as it is now** |
 | ADR entries | `## Decisions` log in `architecture.md` | Immutable record of **why** a decision was made, with context and alternatives |
 
 Rule of thumb: `architecture.md` answers *"how does this work today?"*; ADRs answer *"why is it this way?"*. Keep `architecture.md` current by editing it; never rewrite history in an ADR — supersede it instead.
