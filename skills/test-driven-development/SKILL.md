@@ -23,6 +23,8 @@ Write the test first. Watch it fail. Write minimal code to pass.
 
 **Core principle:** If you didn't watch the test fail, you don't know if it tests the right thing.
 
+**Scope:** TDD is the *loop* for building one behavior at a time. To decide *which* behaviors deserve tests and *what* coverage to aim for, work out the plan with the **testing-strategy** skill first, then drive each item through the cycle below.
+
 ## When to Use
 
 **Always:** new features, bug fixes, refactoring, behavior changes.
@@ -41,7 +43,7 @@ Write code before the test? Delete it. No exceptions — no keeping it as "refer
 
 ### RED — Write Failing Test
 
-Write one minimal test showing what should happen.
+Write one minimal test showing what should happen. Pick the behavior from your test plan — cover business-critical paths, error handling, edge cases, and security boundaries first; skip trivial getters/setters and framework code (see the **testing-strategy** skill).
 
 **Requirements:**
 - Tests one behavior
