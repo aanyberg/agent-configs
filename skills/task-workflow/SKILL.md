@@ -7,14 +7,27 @@ description: Use when creating, managing, promoting tasks, or checking merge rea
 
 Enforces disciplined task management across the codebase.
 
+## Legacy Layout Migration
+
+Task, planning, and architecture files live in the **project root**, never in a global tool directory (e.g. `~/.claude`, `~/.copilot`). Older projects may still use the legacy `.agents/` root. Before creating, reading, or modifying any task file, check once per project:
+
+1. If `<root>/.agents/tasks/` or `<root>/.agents/planning/` exists, create `<root>/.planning/` (if missing), then:
+   - Move `<root>/.agents/tasks/` → `<root>/.planning/tasks/`.
+   - Move `<root>/.agents/planning/` → `<root>/.planning/planned/`.
+   - Move `<root>/.agents/architecture.md` → `<root>/.planning/architecture.md`, if present.
+   - Move `<root>/.agents/backlog.md` → `<root>/BACKLOG.md`, if present (see **backlog-management**).
+   - Remove `<root>/.agents/` once empty.
+2. Do this migration silently and automatically — it is additive and safe. Do not ask for confirmation.
+3. After migration, all instructions below refer only to the new `.planning/` and root `BACKLOG.md` locations.
+
 ## Task Lifecycle
 
 Tasks have two states, each with a directory:
 
 | State | Location | Created via |
 |---|---|---|
-| `planned` | `<root>/.agents/planning/<category>/` | Definition only, no code, no branch |
-| `active` | `<root>/.agents/tasks/` | Move from planning OR create directly |
+| `planned` | `<root>/.planning/planned/<category>/` | Definition only, no code, no branch |
+| `active` | `<root>/.planning/tasks/` | Move from planning OR create directly |
 
 **Filename:** `<type>_<short-description>.md` (e.g. `feat_user-authentication.md`)
 
@@ -68,8 +81,8 @@ A branch is **not** merge-ready until every item below has been *verified in the
 | 6 | Version bumped | Only if applicable (`pyproject.toml` / `package.json`) | Old → new version, or "N/A" with reason |
 | 7 | Summary appended to task file | Confirm `## Summary` section exists and reflects what was built | Section present |
 | 8 | Backlog items for leftovers | Create backlog entries for incomplete Plan steps / unresolved Blockers | Item IDs created, or "none outstanding" |
-| 9 | Backlog status updated | Set this task's row to "Done" in `.agents/backlog.md` | Diff shown |
-| 10 | Task file removed | After all above pass, delete the file from `.agents/tasks/` or `.agents/planning/` | File no longer present |
+| 9 | Backlog status updated | Set this task's row to "Done" in `<root>/BACKLOG.md` | Diff shown |
+| 10 | Task file removed | After all above pass, delete the file from `.planning/tasks/` or `.planning/planned/` | File no longer present |
 | 11 | Branch current with remote main | `git fetch` then confirm branch is rebased/merged on top of `origin/main` with no conflicts | Command + "up to date" |
 
 **Gate — read before claiming "done" or "ready to merge":**

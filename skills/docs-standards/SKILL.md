@@ -25,10 +25,10 @@ For **multi-file doc synchronisation** after a code change — mapping a diff to
 |-----|----------|----------------------|
 | Project overview | `README.md` | docs-standards |
 | Release history | `CHANGELOG.md` | docs-standards + code-standards (versioning) |
-| System-as-is + ADRs | `.agents/architecture.md` | architecture-planning |
+| System-as-is + ADRs | `.planning/architecture.md` | architecture-planning |
 | Role behaviour | `docs/roles/*.md` | Docs Change Steward |
 | Layer / locked-version tables | layer docs | Docs Change Steward |
-| Task / backlog records | `.agents/tasks/`, `.agents/backlog.md` | task-workflow, backlog-management |
+| Task / backlog records | `.planning/tasks/`, `BACKLOG.md` | task-workflow, backlog-management |
 
 Keep each doc in its canonical location. Do not duplicate the same information across files — link instead.
 
@@ -84,7 +84,7 @@ Rules:
 Treat stale documentation like a failing test — fix it in the same branch as the change that made it wrong:
 
 - A behavioural change updates the affected page **and** `CHANGELOG.md`.
-- A structural change updates `.agents/architecture.md` (see **architecture-planning**).
+- A structural change updates `.planning/architecture.md` (see **architecture-planning**).
 - Missing or outdated docs are **Documentation debt** — log them via **tech-debt**, then track through **backlog-management**.
 
 ## Commits & Branches
