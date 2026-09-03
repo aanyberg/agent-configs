@@ -1,5 +1,6 @@
 # Not a Python package. This file exists only so `uv` can pin the two
-# dependencies the structural validation suite needs, and hold pytest's
+# dependencies the structural validation suite needs (shellcheck-py
+# vendors the shellcheck binary, so CI needs no separate install), and hold pytest's
 # config. Nothing here is built, installed, or published.
 
 [project]
@@ -12,6 +13,7 @@ dependencies = []
 dev = [
   "pytest>=8.0",
   "pyyaml>=6.0",
+  "shellcheck-py>=0.10",
 ]
 
 [tool.uv]

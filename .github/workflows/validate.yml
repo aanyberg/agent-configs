@@ -6,9 +6,17 @@ on:
     branches: [main]
 
 jobs:
-  structure:
-    name: Structural validation
-    runs-on: ubuntu-latest
+  validate:
+    # The shipped scripts run on contributors' machines, and BSD and GNU sed
+    # disagree. A Linux-only matrix would not have caught that.
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+    name: validate (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+
     steps:
       - uses: actions/checkout@v4
 
@@ -17,5 +25,5 @@ jobs:
         with:
           enable-cache: true
 
-      - name: Validate plugin structure
-        run: uv run --frozen pytest tests -q
+      - name: Validate plugin structure and scripts
+        run: uv run --frozen pytest tests

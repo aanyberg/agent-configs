@@ -44,15 +44,18 @@ Replace `/path/to/agent-configs` with the absolute path to your local clone, e.g
 
 ## Validation
 
-Every change is gated by a structural validation suite that parses the same files
-Claude Code parses at load time, so a failure means the plugin would load wrong.
+Every change is gated by a validation suite. It parses the same files Claude Code
+parses at load time — so a failure means the plugin would load wrong — and runs the
+shipped shell scripts end to end in throwaway git repos.
 
 ```bash
 uv run --frozen pytest tests
 ```
 
-It runs in well under a second and needs no API access. `.github/workflows/validate.yml`
-runs it on every pull request and on pushes to `main`.
+It takes about two seconds and needs no API access or GitHub auth — `gh` is stubbed.
+`.github/workflows/validate.yml` runs it on every pull request and on pushes to `main`,
+on both Linux and macOS, because BSD and GNU `sed` disagree in ways that have already
+produced a real bug here.
 
 What it checks:
 
@@ -63,6 +66,8 @@ What it checks:
 | Agents | `name` matches the filename and is kebab-case; `tools`, `model`, `effort`, `maxTurns`, and `permissionMode` are present and valid; `plan`-mode agents declare no write tools |
 | References | relative markdown links resolve, shipped scripts are executable with a shebang, and every skill or agent named in prose exists |
 | Policy | `policy.example.yml` parses, has exactly one copy, keeps the `backend: auto` line `generate-policy.sh` substitutes, and contains every key the skills read |
+| Scripts | `detect-backend.sh` and `generate-policy.sh` run against real git repos with a stubbed `gh`: explicit and auto backend resolution, the incomplete-migration guard, idempotent generation, a missing template, and a round trip proving what one writes the other reads back |
+| Shell lint | `shellcheck --severity=warning` over every shipped script, using the binary vendored by `shellcheck-py` so no separate install is needed |
 
 Adding a skill or agent needs no test changes — the suite discovers files by glob and
 parametrises per file, so each one fails independently with its own path in the failure.
