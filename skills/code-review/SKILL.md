@@ -1,117 +1,96 @@
 ---
 name: code-review
-description: Review Python code changes on the current branch with Google Python Style, idiomatic design, typing, test adequacy, KISS, SOLID, and separation of concerns. Use constructive language and actionable suggestions.
+description: Review code changes on the current branch or PR before merge, in any language. Detects the languages in the diff and applies the matching guideline skill (python-coding-guidelines, typescript-coding-guidelines, rust-coding-guidelines). Use for PR reviews, branch audits, test adequacy checks, and as the independent reviewer step in task-workflow merge readiness. Constructive tone, actionable findings.
 tools: [git]
 ---
 
-# Python Code Review Skill
+# Code Review
 
-## What this skill does
-Performs a structured review of Python code modified on the current Git branch, focusing on:
+Structured review of code modified on the current branch, focusing on correctness and edge cases, readability and maintainability, idiomatic usage per language, typing quality, test coverage of business logic, KISS, pragmatic SOLID, and separation of concerns.
 
-- Correctness and edge cases
-- Readability and maintainability
-- Idiomatic Python usage
-- Google Python Style Guide alignment
-- Type hints and typing quality
-- Test coverage for business logic and complex behavior
-- KISS (keep it simple)
-- SOLID principles (when compatible with idiomatic Python)
-- Separation of concerns and decomposition of complex code
-
-This skill uses constructive, collaborative phrasing (for example: _“Have you considered…?”_) and includes practical suggestions.
+Uses constructive, collaborative phrasing ("Have you considered ...?") with practical suggestions.
 
 ## When to use
-Use this skill when:
 
 - Reviewing a pull request or branch before merge
-- Auditing recent Python changes for quality
+- Acting as the independent reviewer in **task-workflow** row 12
+- Auditing recent changes for quality
 - Improving test strategy for new functionality
-- Checking maintainability and design quality
+
+## Reviewer independence
+
+When invoked as the independent reviewer, the reviewer receives only: the diff, the backlog item (goal and acceptance criteria), and the tests. It does not receive the author's reasoning, plan, or log. It runs in a fresh context or as a separate subagent. The author never approves their own PR.
 
 ## Workflow
 
-### 1) Collect changed Python files
-Identify files changed on the current branch.
+### 1) Collect changed files
 
-Typical commands:
-- `git merge-base HEAD main`
-- `git diff --name-only <merge-base>...HEAD -- '*.py'`
+```bash
+git fetch origin
+base=$(git merge-base HEAD origin/main)
+git diff --name-only "$base"...HEAD
+```
 
-If no Python files changed, report that and stop.
+Group by language from extension: `.py` → python-coding-guidelines; `.ts .tsx .js .jsx` → typescript-coding-guidelines; `.rs` → rust-coding-guidelines. Load each applicable guideline skill plus **code-standards**. Files with no matching guideline (SQL, YAML, shell, Terraform) are reviewed against the universal checks only. If no reviewable files changed, report that and stop.
 
 ### 2) Review each changed file
-For each changed file, evaluate:
 
-1. **Correctness**
-   - Potential bugs, missed edge cases, failure modes
-   - Error handling and input validation
+Universal checks, every language:
 
-2. **Style and idioms**
-   - Google Python Style Guide alignment
-   - Naming, docstrings, readability, clear control flow
-   - Idiomatic constructs (avoid overengineering)
+1. **Correctness**: bugs, missed edge cases, failure modes, error handling, input validation at boundaries.
+2. **Security**: authz on every new endpoint or query path, no secrets in code or logs, no injection via string-built queries or shell, no new dependency without a human label.
+3. **Tests**: business logic and complex behaviour tested; critical paths, edge cases, regressions covered; no test deleted or skipped without justification; no exhaustive tests demanded for trivial wrappers.
+4. **Design**: KISS, cohesion, dependency direction, interface clarity, split overly complex units.
+5. **Scope**: diff matches the acceptance criteria, no unrelated changes, no drive-by refactors outside task scope.
+6. **Docs**: `CHANGELOG.md` and `.planning/architecture.md` updated when behaviour or structure changed.
 
-3. **Typing**
-   - Public APIs and core business logic are typed
-   - Type hints are precise enough to be useful
-   - Avoid unnecessary `Any` where stronger typing is feasible
+Language-specific checks:
 
-4. **Tests**
-   - Business logic and complex behavior are tested
-   - Critical paths, edge cases, and regressions covered
-   - Do **not** require exhaustive tests for trivial wrappers
+**Python**
+- Google Python Style Guide alignment, naming, docstrings, clear control flow
+- Public APIs and core logic typed; precise hints; no unnecessary `Any`
+- Idiomatic constructs, no overengineering
 
-5. **Design quality**
-   - KISS: flag unnecessary complexity
-   - SOLID (pragmatic): cohesion, dependency direction, interface clarity
-   - Separation of concerns: split overly complex functions/classes
+**TypeScript / JavaScript**
+- `strict` respected; `unknown` over `any`; `as` only with documented safety reasoning; `@ts-expect-error` only with a comment
+- Discriminated unions and `never` exhaustiveness on sum types
+- Runtime validation (zod or equivalent) at every external boundary: request bodies, env, third-party responses
+- Async errors handled; no swallowed `.catch`; domain error classes with `cause`
+- Named exports, import order, no circular imports
+- Changed behaviour has a unit test or a Playwright test; stubs preferred over full module mocks
+- Frontend: accessible markup (labels, roles, keyboard), no layout done with `any`-typed props
 
-### 3) Prioritize findings
-Classify findings as:
+**Rust**
+- Per rust-coding-guidelines: ownership clarity, error types with `thiserror` or equivalent, no `unwrap` in library paths, clippy clean
 
-- **High**: likely bug, missing critical test, unsafe behavior
-- **Medium**: maintainability risk, weak typing, design concern
-- **Low**: style/readability polish, optional improvement
+### 3) Prioritise findings
 
-### 4) Use constructive review language
-Prefer:
-- “Have you considered handling …?”
-- “Would it simplify this if …?”
-- “Could this be split into … for clearer separation of concerns?”
+- **High**: likely bug, missing critical test, unsafe behaviour, authz gap, scope violation
+- **Medium**: maintainability risk, weak typing, design concern, missing boundary validation
+- **Low**: style or readability polish
 
-Avoid blunt fault language such as “This is wrong.”
+### 4) Constructive language
 
-### 5) Provide actionable suggestions
-Every significant finding should include:
-- Why it matters
-- Concrete improvement
-- Optional code sketch if helpful
+Prefer "Have you considered handling ...?", "Would it simplify this if ...?", "Could this be split into ... for clearer separation?". Avoid "This is wrong."
+
+### 5) Actionable suggestions
+
+Every significant finding: why it matters, concrete improvement, optional code sketch.
 
 ## Output format
-Return:
 
-1. **Summary**
-   - Scope reviewed (files)
-   - Overall quality impression
+1. **Summary**: scope reviewed (files, languages), overall impression, verdict `approve` | `request-changes` | `needs-human`.
+2. **Findings by priority**: High / Medium / Low, file + location, observation + suggestion.
+3. **Testing assessment**: what is adequately tested, what critical behaviour is not.
+4. **Refactor opportunities**: KISS simplifications, separation of concerns, idiomatic upgrades.
+5. **Acceptance criteria check** (independent reviewer only): each criterion with met / not met / cannot verify.
 
-2. **Findings by priority**
-   - High / Medium / Low
-   - File + location
-   - Observation + suggestion (constructive tone)
-
-3. **Testing assessment**
-   - What is adequately tested
-   - What critical behavior is not yet covered
-
-4. **Refactor opportunities**
-   - Simplifications (KISS)
-   - Separation of concerns improvements
-   - Idiomatic Python upgrades
+`needs-human` is mandatory when the diff touches a `policy.autonomous.require_human_review_if_touches` path, adds a dependency, or changes a public API or schema.
 
 ## Quality checks before finishing
-- Reviewed only changed branch files (or clearly stated scope deviation)
-- Included typing and testing assessment
+
+- Reviewed only changed branch files, or stated the deviation
+- Loaded the guideline skill for every language present
+- Included typing, security, and testing assessment
 - Called out complexity with simplification options
-- Used constructive, collaborative wording
-- Gave actionable suggestions, not only critique
+- Verdict stated explicitly
