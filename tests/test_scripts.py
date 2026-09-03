@@ -280,3 +280,65 @@ def test_shellcheck_is_clean(script):
         capture_output=True, text=True,
     )
     assert result.returncode == 0, f"\n{result.stdout}{result.stderr}"
+
+
+# --------------------------------------------------------------------------
+# Portability
+# --------------------------------------------------------------------------
+#
+# These scripts run on contributors' machines, where `sed` and `grep` are BSD
+# rather than GNU. shellcheck does not parse regex arguments, so it reports
+# nothing here — this check exists because a `\s` in `sed -E` silently produced
+# a wrong backend on macOS while passing every Linux run.
+
+# GNU/PCRE escapes with no POSIX equivalent. BSD tools read `\s` as a literal
+# 's' rather than erroring, so the failure is silent and data-dependent.
+GNU_ONLY_ESCAPES = {
+    r"\s": "[[:space:]]", r"\S": "[^[:space:]]",
+    r"\d": "[[:digit:]]", r"\D": "[^[:digit:]]",
+    r"\w": "[[:alnum:]_]", r"\W": "[^[:alnum:]_]",
+    r"\b": "an explicit delimiter", r"\B": "an explicit delimiter",
+}
+
+# Flags that exist on GNU but not BSD, or mean something different there.
+GNU_ONLY_FLAGS = {
+    "grep -P": "BSD grep has no PCRE mode; use -E with POSIX classes",
+    "sed -i ": "BSD sed requires a backup suffix; use `sed -i ''` or a temp file",
+    "readlink -f": "BSD readlink has no -f; use a cd/pwd subshell",
+    "date -d": "BSD date has no -d; use -j -f",
+}
+
+
+def _regex_lines(script: Path) -> list[tuple[int, str]]:
+    return [
+        (n, line)
+        for n, line in enumerate(script.read_text(encoding="utf-8").splitlines(), 1)
+        if ("sed" in line or "grep" in line) and not line.lstrip().startswith("#")
+    ]
+
+
+@pytest.mark.parametrize(
+    "script", sorted(repo_root().glob("plugins/*/skills/*/scripts/*.sh")),
+    ids=lambda p: str(p.relative_to(repo_root())),
+)
+def test_no_gnu_only_regex_escapes(script):
+    findings = [
+        f"line {n}: {escape!r} is GNU-only — use {replacement} ({line.strip()})"
+        for n, line in _regex_lines(script)
+        for escape, replacement in GNU_ONLY_ESCAPES.items()
+        if escape in line
+    ]
+    assert not findings, (
+        f"{script.relative_to(repo_root())} would behave differently under BSD "
+        f"sed/grep:\n  " + "\n  ".join(findings)
+    )
+
+
+@pytest.mark.parametrize(
+    "script", sorted(repo_root().glob("plugins/*/skills/*/scripts/*.sh")),
+    ids=lambda p: str(p.relative_to(repo_root())),
+)
+def test_no_gnu_only_flags(script):
+    text = script.read_text(encoding="utf-8")
+    findings = [f"{flag!r}: {why}" for flag, why in GNU_ONLY_FLAGS.items() if flag in text]
+    assert not findings, f"{script.relative_to(repo_root())}:\n  " + "\n  ".join(findings)

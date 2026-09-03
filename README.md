@@ -53,9 +53,8 @@ uv run --frozen pytest tests
 ```
 
 It takes about two seconds and needs no API access or GitHub auth — `gh` is stubbed.
-`.github/workflows/validate.yml` runs it on every pull request and on pushes to `main`,
-on both Linux and macOS, because BSD and GNU `sed` disagree in ways that have already
-produced a real bug here.
+`.github/workflows/validate.yml` gates every pull request on Linux, and repeats the
+suite on macOS after merge to `main` as a canary.
 
 What it checks:
 
@@ -68,6 +67,7 @@ What it checks:
 | Policy | `policy.example.yml` parses, has exactly one copy, keeps the `backend: auto` line `generate-policy.sh` substitutes, and contains every key the skills read |
 | Scripts | `detect-backend.sh` and `generate-policy.sh` run against real git repos with a stubbed `gh`: explicit and auto backend resolution, the incomplete-migration guard, idempotent generation, a missing template, and a round trip proving what one writes the other reads back |
 | Shell lint | `shellcheck --severity=warning` over every shipped script, using the binary vendored by `shellcheck-py` so no separate install is needed |
+| Portability | shipped scripts use no GNU-only regex escape (`\s`, `\d`, `\w`, …) or flag (`grep -P`, bare `sed -i`, `readlink -f`, `date -d`). shellcheck does not parse regex arguments, and a `\s` in `sed -E` silently produced a wrong backend on macOS while passing every Linux run |
 
 Adding a skill or agent needs no test changes — the suite discovers files by glob and
 parametrises per file, so each one fails independently with its own path in the failure.

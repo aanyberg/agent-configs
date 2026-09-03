@@ -7,23 +7,27 @@ on:
 
 jobs:
   validate:
-    # The shipped scripts run on contributors' machines, and BSD and GNU sed
-    # disagree. A Linux-only matrix would not have caught that.
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, macos-latest]
-
-    name: validate (${{ matrix.os }})
-    runs-on: ${{ matrix.os }}
-
+    name: validate
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5
+      - uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true
+      - run: uv run --frozen pytest tests
 
-      - name: Validate plugin structure and scripts
-        run: uv run --frozen pytest tests
+  # BSD and GNU sed disagree, and that has already produced a real bug here.
+  # The known cases are caught statically on Linux by test_no_gnu_only_*, which
+  # is what gates a PR. This job is the canary for the rest — BSD-only argument
+  # handling, bash 3.2 on stock macOS — and runs after merge rather than on
+  # every PR, because a macOS runner queues for minutes to run a 2-second suite.
+  validate-macos:
+    name: validate (macOS canary)
+    if: github.event_name == 'push'
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - run: uv run --frozen pytest tests
