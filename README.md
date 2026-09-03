@@ -15,9 +15,7 @@ These components enhance AI coding assistants by providing domain knowledge, cod
 
 ### Agents & Skills (Claude Code)
 
-Claude Code loads agents and skills via the plugin marketplace at `.claude-plugin/marketplace.json` — see [docs/CONSUMER.md](docs/CONSUMER.md) for the exact `.claude/settings.json` snippet and CLI commands. The old `agents/` and `skills/` symlink targets have moved to `plugins/conventions/agents` and `plugins/conventions/skills`; do not symlink both the plugin and the legacy paths, or skills/agents will load twice.
-
-For tools other than Claude Code that don't support this plugin format, the `agents/` and `skills/` directories at the repo root now only contain a pointer to the new location.
+Claude Code loads agents and skills via the plugin marketplace at `.claude-plugin/marketplace.json` — see [docs/CONSUMER.md](docs/CONSUMER.md) for the exact `.claude/settings.json` snippet and CLI commands. Agents and skills live at `plugins/conventions/agents` and `plugins/conventions/skills`.
 
 ### Global Instructions
 
