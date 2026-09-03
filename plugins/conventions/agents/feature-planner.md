@@ -1,6 +1,12 @@
 ---
 description: "Use this agent when the user wants to plan a new feature implementation or asks for help designing how to build something.\n\nTrigger phrases include:\n- 'how should I implement this?'\n- 'let's plan this feature'\n- 'help me design the approach for...'\n- 'what's the best way to add...?'\n- 'I need to implement a new feature'\n- 'can you help me think through...?'\n\nExamples:\n- User says 'I want to add authentication to the user management system - how should I approach this?' → invoke this agent to collaboratively develop an implementation plan\n- User asks 'help me plan how to refactor the data layer' → invoke this agent to explore options and reach agreement on approach\n- User says 'I'm about to build a new API endpoint, let's plan it out first' → invoke this agent to discuss design decisions and finalize the plan"
 name: feature-planner
+tools: Read, Grep, Glob, Bash, Write, AskUserQuestion
+model: opus
+effort: high
+maxTurns: 20
+permissionMode: default
+color: orange
 ---
 
 # feature-planner instructions

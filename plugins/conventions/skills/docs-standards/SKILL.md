@@ -1,6 +1,6 @@
 ---
 name: docs-standards
-description: Use when writing or updating documentation — READMEs, CHANGELOGs, role/layer docs, ADRs, or API references. Covers doc placement, changelog format, the mandatory role-doc layout, writing style, and when to hand off to the Docs Change Steward agent.
+description: Use when writing or updating documentation — READMEs, CHANGELOGs, role/layer docs, ADRs, or API references. Covers doc placement, changelog format, the mandatory role-doc layout, writing style, and when to hand off to the docs-change-steward agent.
 ---
 
 # Documentation Standards
@@ -17,7 +17,7 @@ Load this skill when:
 - Documenting a public API, module, or behavioural change
 - Reviewing a pull request that changes documentation
 
-For **multi-file doc synchronisation** after a code change — mapping a diff to every affected page and maintaining release traceability — hand off to the **Docs Change Steward** agent, which enforces these same standards at scale.
+For **multi-file doc synchronisation** after a code change — mapping a diff to every affected page and maintaining release traceability — hand off to the **docs-change-steward** agent, which enforces these same standards at scale.
 
 ## Where Documentation Lives
 
@@ -26,8 +26,8 @@ For **multi-file doc synchronisation** after a code change — mapping a diff to
 | Project overview | `README.md` | docs-standards |
 | Release history | `CHANGELOG.md` | docs-standards + code-standards (versioning) |
 | System-as-is + ADRs | `.planning/architecture.md` | architecture-planning |
-| Role behaviour | `docs/roles/*.md` | Docs Change Steward |
-| Layer / locked-version tables | layer docs | Docs Change Steward |
+| Role behaviour | `docs/roles/*.md` | docs-change-steward |
+| Layer / locked-version tables | layer docs | docs-change-steward |
 | Task / backlog records | `.planning/tasks/`, `BACKLOG.md` | task-workflow, backlog-management |
 
 Keep each doc in its canonical location. Do not duplicate the same information across files — link instead.
@@ -65,7 +65,7 @@ Follow *Keep a Changelog* with Semantic Versioning. The version source of truth 
 
 ## Role Doc Layout (mandatory)
 
-When creating or updating a role document under `docs/roles/*.md`, use this exact top-level section order so files stay consistent with the **Docs Change Steward** agent:
+When creating or updating a role document under `docs/roles/*.md`, use this exact top-level section order so files stay consistent with the **docs-change-steward** agent:
 
 1. `## What is this role?`
 2. `## What does this role do?`
