@@ -15,7 +15,7 @@
 
 ## Quick Reference
 
-**Policy:** `<root>/.planning/policy.yml` is read before any action that creates items, branches, or PRs. It defines backend, ID scheme, statuses, commit types, branch format, versioning, and autonomous limits. Missing file means single-agent work with skill defaults.
+**Policy:** `<root>/.planning/policy.yml` is read before any action that creates items, branches, or PRs. It defines backend, ID scheme, statuses, commit types, branch format, versioning, and autonomous limits. Missing file: `backlog-management`'s `scripts/generate-policy.sh` creates it from best-practice defaults (backend auto-detected) the first time it's needed, and reports what it generated. Never regenerated or overwritten silently after that — edit it directly to change anything.
 **Backlog:** only via `backlog-management`. Backend (`github-issues` or `BACKLOG.md`) resolved from policy, never assumed. Status `backlog → ready → active → in-review → done`, side states `blocked`, `cancelled`. Agents select `ready` + `agent-safe` only; only triage or a human sets those.
 **Task:** `<type>_<short-description>.md` in `.planning/tasks/` with Backlog ID, Status, Goal, Acceptance Criteria, Plan before any code.
 **Commits:** `<type>(<scope>): <imperative>`, types from policy (default `feat`, `fix`, `chore`, `docs`, `refactor`, `test`). Branches `<type>/<id>-<short-kebab>`.

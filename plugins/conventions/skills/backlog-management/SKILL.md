@@ -9,7 +9,9 @@ One interface, two backends. Callers use the operations in this file. Backend fi
 
 ## 1. Resolve the backend (once per session)
 
-Run `scripts/detect-backend.sh` from the project root, or apply the same order by hand:
+If `<root>/.planning/policy.yml` does not exist, run `scripts/generate-policy.sh` first — it creates the file from best-practice defaults (backend auto-detected the same way as step 2 below) and prints what it generated. Report that generation in your first response. It never overwrites an existing file, so this is safe to run unconditionally.
+
+Then run `scripts/detect-backend.sh` from the project root, or apply the same order by hand:
 
 1. `.planning/policy.yml` → `backlog.backend`. Explicit value wins.
 2. Auto-detect `github-issues` only if all hold: `git remote get-url origin` matches `github.com`; `gh auth status` succeeds; `gh api repos/{owner}/{repo} --jq .has_issues` is `true`.

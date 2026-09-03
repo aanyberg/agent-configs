@@ -5,7 +5,7 @@ description: Use when creating, managing, or promoting tasks, checking merge rea
 
 # Task Workflow
 
-Enforces disciplined task management across the codebase. Backlog operations go through **backlog-management**, never by editing backlog storage directly. Project rules come from `<root>/.planning/policy.yml`; when the file is missing, assume single-agent work and the defaults stated below.
+Enforces disciplined task management across the codebase. Backlog operations go through **backlog-management**, never by editing backlog storage directly. Project rules come from `<root>/.planning/policy.yml`. If it is missing, run `backlog-management`'s `scripts/generate-policy.sh` before proceeding — it creates the file from best-practice defaults (backend auto-detected) and prints what it generated; report that in your first response, then continue as if the file always existed. It is never regenerated or overwritten once it exists.
 
 ## Legacy Layout Migration
 
