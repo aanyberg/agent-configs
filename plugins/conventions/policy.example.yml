@@ -37,7 +37,15 @@ autonomous:
   max_diff_lines: 400
   max_files: 15
   task_wall_clock_min: 60
-  require_human_review_if_touches: []
+  # Globs. A PR touching any of these gets `needs-human`; an agent never merges it.
+  require_human_review_if_touches:
+    - ".github/workflows/**"
+    - "**/migrations/**"
+    - "pyproject.toml"
+    - "package.json"
+    - "package-lock.json"
+    - "pnpm-lock.yaml"
+    - "Cargo.toml"
   forbidden:
     - force-push
     - edit-branch-protection

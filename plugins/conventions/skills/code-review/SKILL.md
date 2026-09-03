@@ -1,7 +1,6 @@
 ---
 name: code-review
 description: Review code changes on the current branch or PR before merge, in any language. Detects the languages in the diff and applies the matching guideline skill (python-coding-guidelines, typescript-coding-guidelines, rust-coding-guidelines). Use for PR reviews, branch audits, test adequacy checks, and as the independent reviewer step in task-workflow merge readiness. Constructive tone, actionable findings.
-tools: [git]
 ---
 
 # Code Review

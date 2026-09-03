@@ -23,7 +23,7 @@ backend="markdown"
 reason="no GitHub remote, no gh auth, or Issues not enabled"
 remote="$(git -C "$root" remote get-url origin 2>/dev/null || true)"
 if [[ "$remote" == *github.com* ]] && gh auth status >/dev/null 2>&1; then
-  if [[ "$(gh api repos/{owner}/{repo} --jq .has_issues 2>/dev/null)" == "true" ]]; then
+  if [[ "$(gh api "repos/{owner}/{repo}" --jq .has_issues 2>/dev/null)" == "true" ]]; then
     backend="github-issues"
     reason="origin is on github.com, gh is authenticated, and Issues is enabled"
   fi

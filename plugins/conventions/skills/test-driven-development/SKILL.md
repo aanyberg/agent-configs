@@ -1,18 +1,6 @@
 ---
 name: test-driven-development
 description: Use when implementing any feature or bugfix, before writing implementation code
-tools:
-  [
-    "shell",
-    "read",
-    "search",
-    "edit",
-    "task",
-    "skill",
-    "web_search",
-    "web_fetch",
-    "ask_user",
-  ]
 ---
 
 # Test-Driven Development (TDD)
