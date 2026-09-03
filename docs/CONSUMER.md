@@ -22,7 +22,7 @@ Add the marketplace and enable the plugin in the consumer repo's `.claude/settin
 }
 ```
 
-`aanyberg/agent-configs` is private, so the consumer's Claude Code session (local or cloud) needs read access to it under the account/org the session runs as.
+`aanyberg/agent-configs` is public, so no additional credentials are needed to reach it.
 
 ## `CLAUDE.md` header
 
@@ -31,6 +31,12 @@ Every consumer repo's `CLAUDE.md` should start with:
 ```markdown
 Backlog lives in GitHub Issues. Read .planning/policy.yml before any action that creates items, branches, or PRs.
 ```
+
+## `.planning/policy.yml` — you don't need to write this yourself
+
+The header above tells the agent to read `.planning/policy.yml`, but a new consumer repo won't have one yet, and doesn't need to create it manually. The first time a policy-dependent skill (`backlog-management`, `task-workflow`, `git-conventions`) needs it and finds it missing, it generates `.planning/policy.yml` from [`plugins/conventions/policy.example.yml`](../plugins/conventions/policy.example.yml) — best-practice defaults, with `backlog.backend` auto-detected from your GitHub remote — and reports what it generated in that session's response. It never regenerates or overwrites the file again after that.
+
+If you want to guarantee the GitHub Issues backend the header above promises (rather than relying on auto-detection), set `backlog.backend: github-issues` explicitly once the file exists. Every other value in it — commit types, branch format, versioning, autonomous limits — is a starting point, not a fixed rule; edit the file directly and it takes effect on the next run.
 
 ## Local setup (one-time, per machine)
 

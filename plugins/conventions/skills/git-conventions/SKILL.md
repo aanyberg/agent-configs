@@ -5,7 +5,7 @@ description: Use when committing, creating branches, opening PRs, or managing gi
 
 # Git Conventions
 
-Enforces Conventional Commits and disciplined branching across all projects. Values marked *policy* come from `<root>/.planning/policy.yml`; defaults apply when the file or key is missing.
+Enforces Conventional Commits and disciplined branching across all projects. Values marked *policy* come from `<root>/.planning/policy.yml`, generated on first use from best-practice defaults if the file doesn't exist (see **backlog-management**'s `scripts/generate-policy.sh`); the defaults stated below apply for any individual key still missing from an existing file.
 
 ## Commit Format
 
