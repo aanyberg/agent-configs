@@ -40,10 +40,4 @@ mkdir -p ~/.codex
 ln -s /path/to/agent-configs/AGENTS.md ~/.codex/AGENTS.md
 ```
 
-**OpenCode**
-```bash
-mkdir -p ~/.opencode
-ln -s /path/to/agent-configs/AGENTS.md ~/.opencode/AGENTS.md
-```
-
 Replace `/path/to/agent-configs` with the absolute path to your local clone, e.g. `/home/<username>/projects/agent-configs`.
